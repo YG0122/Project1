@@ -16,12 +16,30 @@
         android:layout_below="@id/btn_album"
 
         app:layout_constraintBottom_toTopOf="@+id/btn_camera"
-
         android:numColumns="2">
 
 
     </GridView>
 
+    <ImageButton
+        android:id="@+id/plus1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/plus" />
+
+    <ImageButton
+        android:id="@+id/minus1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/minus" />
     <!--<androidx.constraintlayout.widget.ConstraintLayout-->
     <Button
         android:id="@+id/btn_camera"
@@ -49,5 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/btn_camera"
         app:layout_constraintRight_toRightOf="parent" />
+
+
 
 </RelativeLayout>

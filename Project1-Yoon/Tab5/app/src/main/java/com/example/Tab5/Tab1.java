@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,9 +42,8 @@ public class Tab1 extends Fragment {
     @Override
    public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
-
         initialize();
-            mAdapter = new SimpleTextAdapter(jArray);
+
         }
 
 
@@ -126,6 +126,12 @@ public class Tab1 extends Fragment {
             System.out.print("EE");
         }
         c.close();
+        mAdapter = new SimpleTextAdapter(jArray);
+    }
+    private void refresh(){
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+
+        transaction.detach(this).attach(this).commit();
     }
     @Nullable
     @Override
@@ -187,6 +193,8 @@ public class Tab1 extends Fragment {
                     Intent intent=new Intent(getView().getContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getView().getContext().startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse(sms)));
+                    initialize();
+                    Tab1.super.onStart();
                 }catch (JSONException e){
                     e.printStackTrace();
                 }

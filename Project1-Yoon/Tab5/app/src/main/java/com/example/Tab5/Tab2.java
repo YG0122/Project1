@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -42,8 +44,8 @@ import static android.os.Environment.getExternalStorageDirectory;
 public class Tab2 extends Fragment implements View.OnClickListener{
     private ImageView imgMain;
     private Button btnCamera, btnAlbum;
-    GridView gridView;
-    gridAdapter adapter=null;
+    static GridView gridView;
+    static gridAdapter adapter=null;
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_ALBUM = 2;
     private static final int CROP_FROM_CAMERA = 3;
@@ -53,18 +55,18 @@ public class Tab2 extends Fragment implements View.OnClickListener{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA};
     private static final int MULTIPLE_PERMISSIONS = 101;
-    JSONArray jArray=new JSONArray();
+    static JSONArray jArray=new JSONArray();
     String filepath;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
-
         checkPermissions();
 //        initView();
 
     }
+
     private boolean checkPermissions() {
         int result;
         List<String> permissionList = new ArrayList<>();
@@ -119,6 +121,11 @@ public class Tab2 extends Fragment implements View.OnClickListener{
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
+    public static void initialize(JSONArray Data){
+        jArray=Data;
+        adapter= new gridAdapter(jArray);
+        gridView.setAdapter(adapter);
     }
 
 
@@ -234,13 +241,13 @@ public class Tab2 extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,   @Nullable Bundle savedInstanceState) {
 
         View layout = inflater.inflate(R.layout.tab2, container, false);
-//        getActivity().setContentView(R.layout.tab2);
-//        checkPermissions();
+
         btnCamera = layout.findViewById(R.id.btn_camera);
         btnAlbum = layout.findViewById(R.id.btn_album);
         gridView=layout.findViewById(R.id.gridView1);
         btnCamera.setOnClickListener(this);
         btnAlbum.setOnClickListener(this);
+
 
 
 
