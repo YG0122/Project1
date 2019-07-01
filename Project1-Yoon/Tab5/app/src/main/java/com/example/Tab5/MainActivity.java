@@ -22,20 +22,26 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity{
-    private String[] permissions = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    private String[] permissions = {Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS};
     private static final int MULTIPLE_PERMISSIONS = 101;
     public SectionsPagerAdapter sectionsPagerAdapter;
+    TabLayout tabs;
+    private int[] tabIcons = {
+            R.drawable.call,
+            R.drawable.images,
+            R.drawable.gamepad
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermissions();
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initialize();
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        initialize();
+//    }
     private boolean checkPermissions() {
         int result;
         List<String> permissionList = new ArrayList<>();
@@ -87,25 +93,21 @@ public class MainActivity extends AppCompatActivity{
     public void initialize(){
         Log.d("tag", "initialize");
 
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
 
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
 
-        TabLayout tabs = findViewById(R.id.tabs);
+        tabs = findViewById(R.id.tabs);
 
         tabs.setupWithViewPager(viewPager);
+        setupTabIcons();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    }
+    private void setupTabIcons() {
+        tabs.getTabAt(0).setIcon(tabIcons[0]);
+        tabs.getTabAt(1).setIcon(tabIcons[1]);
+        tabs.getTabAt(2).setIcon(tabIcons[2]);
     }
 }
